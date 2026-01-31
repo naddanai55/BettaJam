@@ -21,4 +21,17 @@ public class MouseInput : MonoBehaviour, IPointerClickHandler
             gameManager.GetCardShapeUnMask(card.GetShapeMatrix());
         }
     }
+
+    void Update()
+    {
+        // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Ray from center of screen
+        // RaycastHit hit;
+        // if (Physics.Raycast(ray, out hit))
+        // {
+            
+        // }
+        
+    }
+
+
 }

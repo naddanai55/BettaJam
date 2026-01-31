@@ -3,14 +3,18 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject cardObject;
+    [SerializeField] Transform cardSpawnPoint;
     private List<List<bool>> status = new List<List<bool>>();
     private List<List<bool>> Modifiers = new List<List<bool>>();
     StatusManager statusManager;
     CellManager cellManager;
+    Card card;
     void Awake()
     {
         cellManager = GetComponent<CellManager>();
         statusManager = GetComponent<StatusManager>();
+        card = FindFirstObjectByType<Card>();
     }
 
     void Start()
@@ -27,6 +31,20 @@ public class GameManager : MonoBehaviour
             status.Add(row);
         }
         Debug.Log(status.Capacity);
+        spawnCard();
+
+    }
+
+    void spawnCard()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            int offset = i * 5;
+
+            GameObject newcard = Instantiate(cardObject, cardSpawnPoint.position + new Vector3(offset, 0, 0), Quaternion.identity);
+            newcard.GetComponent<Card>().currentShape = (Card.ShapeType)Random.Range(0, 2);
+        }
+
     }
 
     public void GetCardShapeMask(List<List<bool>> shape)
@@ -49,4 +67,9 @@ public class GameManager : MonoBehaviour
         List<List<bool>> newStatus = statusManager.ApplyModifiers(status, Modifiers, "OR");
         cellManager.UpdateCellColor(newStatus);
     }
+
+    // void SpawnCard()
+    // {
+    //     // Instantiate(cardObject, Vector3.zero, Quaternion.identity);
+    // }
 }
