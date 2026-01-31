@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour
     StatusManager statusManager;
     CellManager cellManager;
     Card card;
+
     void Awake()
     {
         cellManager = GetComponent<CellManager>();
         statusManager = GetComponent<StatusManager>();
         card = FindFirstObjectByType<Card>();
+        Transform.
     }
 
     void Start()
@@ -51,15 +53,12 @@ public class GameManager : MonoBehaviour
     {
         Modifiers = shape;
         Debug.Log(Modifiers.Capacity);
-
     }
 
     public void GetCardShapeUnMask(List<List<bool>> shape)
     {
         Modifiers = shape;
         Debug.Log(Modifiers);
-
-
     }
 
     public void UpdateGameStatus()
@@ -67,9 +66,4 @@ public class GameManager : MonoBehaviour
         List<List<bool>> newStatus = statusManager.ApplyModifiers(status, Modifiers, "OR");
         cellManager.UpdateCellColor(newStatus);
     }
-
-    // void SpawnCard()
-    // {
-    //     // Instantiate(cardObject, Vector3.zero, Quaternion.identity);
-    // }
 }
