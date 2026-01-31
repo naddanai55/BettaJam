@@ -20,12 +20,12 @@ public class EnemyManager : MonoBehaviour
             spawnEnemy();
         }
         renderEnemy();
-        
+
     }
 
     void Update()
     {
-        
+
     }
 
     void spawnEnemy()
@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
         Vector2 pos = new Vector2(ranPosX, ranPosY);
         // var all_pos = getAllEnemyPosition();
 
-        GameObject newEnemy = Instantiate(enemyPrefabs, pos,  Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyPrefabs, pos, Quaternion.identity);
         newEnemy.GetComponent<Enemy>().enemyPos = new Vector2(ranPosX, ranPosY);
         enemyList.Add(newEnemy);
     }
@@ -56,18 +56,17 @@ public class EnemyManager : MonoBehaviour
             // Set object to pos
             e.GetComponent<Enemy>().transform.position = pos;
         }
-        
     }
 
-    List<Vector2> getAllEnemyPosition()
-    {
-        List<Vector2> r = new List<Vector2>();
-        foreach (GameObject v in enemyList)
-        {
-            r.Add(v.GetComponent<Enemy>().enemyPos);
-        }
-        return r;
-    }
+    // List<Vector2> getAllEnemyPosition()
+    // {
+    //     List<Vector2> r = new List<Vector2>();
+    //     foreach (GameObject v in enemyList)
+    //     {
+    //         r.Add(v.GetComponent<Enemy>().enemyPos);
+    //     }
+    //     return r;
+    // }
 
     public void ememiesMove()
     {
@@ -78,28 +77,21 @@ public class EnemyManager : MonoBehaviour
         renderEnemy();
     }
 
-    // void takeDamage()
-    // {
-    //     for (int y = 0; y < 10; y++)
-    //     {
-    //         for (int x = 0; x < 10; x++)
-    //         {
-    //             foreach (GameObject v in enemyList)
-    //             {
-    //                 var vX = v.GetComponent<Enemy>().enemyPos.x;
-    //                 var vY = v.GetComponent<Enemy>().enemyPos.y;
-    //                 if (gameManager.status[y][x] == )
-    //             }
-                
+    public void takeDamage()
+    {
+        for (int i = enemyList.Count - 1; i >= 0; i--)
+        {
+            GameObject obj = enemyList[i];
 
-    //         }
-    //     }
-        
-    // }
+            int x = Mathf.RoundToInt(obj.GetComponent<Enemy>().enemyPos.x);
+            int y = Mathf.RoundToInt(obj.GetComponent<Enemy>().enemyPos.y);
 
+            if (gameManager.status[y][x])
+            {
+                enemyList.RemoveAt(i);
+                Destroy(obj);
+            }
 
-    // public Transform randomEnemyPosition()
-    // {
-
-    // }
+        }
+    }
 }

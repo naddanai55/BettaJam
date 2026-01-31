@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform cardSpawnPoint;
     public List<List<bool>> status = new List<List<bool>>();
     private List<List<bool>> statusPreview = new List<List<bool>>();
-    private List<List<bool>> Modifiers = new List<List<bool>>();
+    // private List<List<bool>> Modifiers = new List<List<bool>>();
     private List<GameObject> hand = new List<GameObject>();
     private int selectedCardIndex = -1;
     private int handSize = 5;
@@ -39,21 +39,22 @@ public class GameManager : MonoBehaviour
             }
             status.Add(row);
         }
-        Debug.Log(status.Capacity);
         spawnCard();
 
     }
 
-    void onCardSelect(int cardIndex, List<List<bool>> cardModifier) {
+    void onCardSelect(int cardIndex, List<List<bool>> cardModifier)
+    {
         selectedCardIndex = cardIndex;
         updatePreview(cardModifier);
     }
 
-    void updatePreview(List<List<bool>> cardModifier) {
-        
+    void updatePreview(List<List<bool>> cardModifier)
+    {
+
         // Get mode
         var mode = "OR";
-        if (currentCardMode != "ADD") 
+        if (currentCardMode != "ADD")
         {
             mode = "XOR";
         }
@@ -62,8 +63,10 @@ public class GameManager : MonoBehaviour
         statusPreview = statusManager.ApplyModifiers(status, cardModifier, mode);
         cellManager.UpdateCellColor(statusPreview);
 
-        for (int i = 0; i < handSize; i++) {
-            if (selectedCardIndex >= 0 && i == selectedCardIndex) {
+        for (int i = 0; i < handSize; i++)
+        {
+            if (selectedCardIndex >= 0 && i == selectedCardIndex)
+            {
                 hand[i].GetComponent<Card>().cardUp();
             }
             else
@@ -94,17 +97,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetCardShapeMask(List<List<bool>> shape)
-    {
-        Modifiers = shape;
-        Debug.Log(Modifiers.Capacity);
-    }
+    // public void GetCardShapeMask(List<List<bool>> shape)
+    // {
+    //     Modifiers = shape;
+    //     Debug.Log(Modifiers.Capacity);
+    // }
 
-    public void GetCardShapeUnMask(List<List<bool>> shape)
-    {
-        Modifiers = shape;
-        Debug.Log(Modifiers);
-    }
+    // public void GetCardShapeUnMask(List<List<bool>> shape)
+    // {
+    //     Modifiers = shape;
+    //     Debug.Log(Modifiers);
+    // }
 
     public void UpdateGameStatus()
     {
@@ -114,4 +117,11 @@ public class GameManager : MonoBehaviour
         cellManager.UpdateCellColor(status);
     }
 
+    public void toggleMode()
+    {
+        if (currentCardMode == "ADD")
+            currentCardMode = "SUB";
+        else
+            currentCardMode = "ADD";
+    }
 }
