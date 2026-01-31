@@ -7,6 +7,7 @@ public class CellManager : MonoBehaviour
     [SerializeField] int cellX = 10;
     [SerializeField] int cellY = 10;
     [SerializeField] float cellSize = 1f;
+    [SerializeField] Transform spawnPoint;
     private List<List<GameObject>> cells = new List<List<GameObject>>();
 
     void Start()

@@ -1,19 +1,31 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject cardObject;
     [SerializeField] Transform cardSpawnPoint;
-    public List<List<bool>> status = new List<List<bool>>();
+    [SerializeField] TMP_Text ModeText;
+    [SerializeField] TMP_Text lelvelText;
+
+    [SerializeField] Slider energySlider;
     private List<List<bool>> statusPreview = new List<List<bool>>();
+    private List<List<bool>> blankStatus = new List<List<bool>>();
+
     // private List<List<bool>> Modifiers = new List<List<bool>>();
     private List<GameObject> hand = new List<GameObject>();
     private int selectedCardIndex = -1;
     private int handSize = 5;
+    private int currentEnergy;
+    private int maxEnergy = 100;
+    public List<List<bool>> status = new List<List<bool>>();
     public string currentCardMode = "ADD";
+    public int gameLevel;
     // public enum CardMode { ADD, SUBTRACT };
     // public CardMode cardMode;
+    EnemyManager enemyManager;
     StatusManager statusManager;
     CellManager cellManager;
     Card card;
@@ -21,8 +33,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         cellManager = GetComponent<CellManager>();
+        enemyManager = GetComponent<EnemyManager>();
         statusManager = GetComponent<StatusManager>();
         card = FindFirstObjectByType<Card>();
+
+        gameLevel = 1;
+        lelvelText.text = gameLevel.ToString();
+
         // cardMode = CardMode.ADD;
     }
 
@@ -38,15 +55,27 @@ public class GameManager : MonoBehaviour
 
             }
             status.Add(row);
+            blankStatus.Add(row);
         }
-        spawnCard();
 
+        currentEnergy = maxEnergy;
+        UpdateEnergyBar();
+        spawnCard();
     }
 
     void onCardSelect(int cardIndex, List<List<bool>> cardModifier)
     {
-        selectedCardIndex = cardIndex;
-        updatePreview(cardModifier);
+        if (selectedCardIndex == cardIndex)
+        {
+            selectedCardIndex = -1;
+            updatePreview(blankStatus);
+        }
+        else
+        {
+            selectedCardIndex = cardIndex;
+            updatePreview(cardModifier);
+        }
+
     }
 
     void updatePreview(List<List<bool>> cardModifier)
@@ -117,11 +146,98 @@ public class GameManager : MonoBehaviour
         cellManager.UpdateCellColor(status);
     }
 
+    public void ResetStatus()
+    {
+        for (int y = 0; y < status.Count; y++)
+        {
+            for (int x = 0; x < status[y].Count; x++)
+            {
+                status[y][x] = false;
+            }
+        }
+
+        selectedCardIndex = -1;
+        statusPreview = status;
+        cellManager.UpdateCellColor(status);
+    }
+
     public void toggleMode()
     {
         if (currentCardMode == "ADD")
             currentCardMode = "SUB";
         else
             currentCardMode = "ADD";
+
+        ModeText.text = currentCardMode;
+    }
+
+    public void resetHand()
+    {
+        foreach (GameObject cardObj in hand)
+        {
+            if (cardObj != null)
+            {
+                Destroy(cardObj);
+            }
+        }
+
+        hand.Clear();
+        selectedCardIndex = -1;
+
+        statusPreview = status;
+        cellManager.UpdateCellColor(status);
+
+        spawnCard();
+    }
+
+    public void commit()
+    {
+        // currentEnergy -= 10;
+        UpdateGameStatus();
+    }
+
+    public void push()
+    {
+        int energyUsed = calculateEnergy();
+        Debug.Log(energyUsed);
+        currentEnergy -= energyUsed;
+        Debug.Log(currentEnergy);
+        UpdateEnergyBar();
+
+        enemyManager.takeDamage();
+        enemyManager.ememiesMove();
+        resetHand();
+        ResetStatus();
+        lelvelText.text = gameLevel.ToString();
+    }
+
+    void UpdateEnergyBar()
+    {
+        energySlider.maxValue = maxEnergy;
+        energySlider.value = currentEnergy;
+    }
+
+    public void resetEnergy()
+    {
+        currentEnergy = 100;
+        UpdateEnergyBar();
+    }
+
+    int calculateEnergy()
+    {
+        int energyAmount = 0;
+
+        for (int y = 0; y < status.Count; y++)
+        {
+            for (int x = 0; x < status[y].Count; x++)
+            {
+                if (status[y][x] == true)
+                {
+                    energyAmount += 1;
+                }
+            }
+        }
+
+        return energyAmount;
     }
 }

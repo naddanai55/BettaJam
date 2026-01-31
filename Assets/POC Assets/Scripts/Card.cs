@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Card : MonoBehaviour
 {
-    public enum ShapeType{ShapeCross, ShapeBox, ShapeX}
+    public enum ShapeType { ShapeCross, ShapeBox1, ShapeBox2, ShapeBox3, ShapeX, ShapeBorder }
     public ShapeType currentShape;
     private Vector3 defaultPos;
     public bool isUsed = false;
@@ -17,19 +17,19 @@ public class Card : MonoBehaviour
             case ShapeType.ShapeCross:
                 return new List<List<bool>>
                 {
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {true ,true ,true ,true ,true ,true ,true ,true ,true ,true },
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false},
-                    new() {false,false,false,false,true ,false,false,false,false,false}
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {true ,true ,true ,true ,true , true, true, true , true, true},
+                    new() {true ,true ,true ,true ,true , true, true, true , true, true},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false},
+                    new() {false,false,false,false,true , true, false,false,false,false}
                 };
 
-            case ShapeType.ShapeBox:
+            case ShapeType.ShapeBox1:
                 return new List<List<bool>>
                 {
                     new() {false,false,false,false,false,false,false,false,false,false},
@@ -42,6 +42,34 @@ public class Card : MonoBehaviour
                     new() {false,false,false,false,false,false,false,false,false,false},
                     new() {false,false,false,false,false,false,false,false,false,false},
                     new() {false,false,false,false,false,false,false,false,false,false}
+                };
+            case ShapeType.ShapeBox2:
+                return new List<List<bool>>
+                {
+                    new() { true, true, true, true, false,false,false,false,false,false},
+                    new() { true, true, true, true, false,false,false,false,false,false},
+                    new() { true, true, true, true, false,false,false,false,false,false},
+                    new() {false,false,false, false, false, false, false, false,false,false},
+                    new() {false,false,false, false, false, false, false, false,false,false},
+                    new() {false,false,false, false, false, false, false, false,false,false},
+                    new() {false,false,false, false, false, false, false, false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false}
+                };
+            case ShapeType.ShapeBox3:
+                return new List<List<bool>>
+                {
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,false,false,false,false},
+                    new() {false,false,false,false,false,false,true,true,true,true },
+                    new() {false,false,false,false,false,false,true,true,true,true },
+                    new() {false,false,false,false,false,false,true,true,true,true }
                 };
 
             case ShapeType.ShapeX:
@@ -58,7 +86,20 @@ public class Card : MonoBehaviour
                     new() {false,true ,false,false,false,false,false,false,true ,false},
                     new() {true ,false,false,false,false,false,false,false,false,true }
                 };
-
+            case ShapeType.ShapeBorder:
+                return new List<List<bool>>
+                {
+                    new() {true ,true ,true ,true ,true ,true ,true ,true ,true ,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,false,false,false,false,false,false,false,false,true },
+                    new() {true ,true ,true ,true ,true ,true ,true ,true ,true ,true }
+                };
             default:
                 return new List<List<bool>>();
         }
@@ -69,13 +110,23 @@ public class Card : MonoBehaviour
         currentShape = (ShapeType)Random.Range(0, Enum.GetNames(typeof(ShapeType)).Length);
     }
 
-    public void cardUp() 
+    public void cardUp()
     {
-        gameObject.transform.position = defaultPos + (Vector3.up * 1f);
+        Vector3 pos = defaultPos + (Vector3.up * 1f);
+        if (gameObject.transform.position == pos)
+        {
+            cardDown();
+        }
+        else
+        {
+            gameObject.transform.position = pos + (Vector3.up * 1f);
+
+        }
     }
 
-    public void cardDown() {
-        if(isUsed) return;
+    public void cardDown()
+    {
+        if (isUsed) return;
         // gameObject.transform.position += Vector3.up * -5f;
         // Debug.Log();
         gameObject.transform.position = defaultPos;
@@ -92,7 +143,8 @@ public class Card : MonoBehaviour
         List<List<bool>> myShape = GetShapeMatrix();
     }
 
-    void Awake() {
+    void Awake()
+    {
         defaultPos = gameObject.transform.position;
     }
 }

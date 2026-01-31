@@ -5,6 +5,7 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefabs;
     [SerializeField] float cellSize = 1f;
+    [SerializeField] int enemyAmount = 3;
     private List<GameObject> enemyList = new List<GameObject>();
     GameManager gameManager;
 
@@ -15,7 +16,7 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < enemyAmount; i++)
         {
             spawnEnemy();
         }
@@ -25,6 +26,7 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
+
 
     }
 
@@ -91,7 +93,23 @@ public class EnemyManager : MonoBehaviour
                 enemyList.RemoveAt(i);
                 Destroy(obj);
             }
-
         }
+        // Debug.Log(enemyList.Count);
+        if (enemyList.Count == 0)
+        {
+            enemyAmount *= 2;
+            SpawnWave();
+            gameManager.gameLevel += 1;
+            gameManager.resetEnergy();
+        }
+    }
+
+    void SpawnWave()
+    {
+        for (int i = 0; i < enemyAmount; i++)
+        {
+            spawnEnemy();
+        }
+        renderEnemy();
     }
 }

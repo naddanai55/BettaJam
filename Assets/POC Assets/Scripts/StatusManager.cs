@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class StatusManager : MonoBehaviour
 {
-
     public List<List<bool>> ApplyModifiers(List<List<bool>> status, List<List<bool>> modifiers, string operation)
     {
         List<List<bool>> newStatus = new List<List<bool>>();
@@ -50,7 +49,6 @@ public class StatusManager : MonoBehaviour
                 Debug.LogError("Unsupported operation: " + operation);
                 return status;
         }
-
         return newStatus;
     }
 }
