@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 41434135}
   - component: {fileID: 41434137}
   - component: {fileID: 41434136}
+  - component: {fileID: 41434139}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardObject: {fileID: 822019995171743732, guid: 672d27d229f834f45bd41afb9af2e1b1, type: 3}
   cardSpawnPoint: {fileID: 161063844}
+  currentCardMode: ADD
 --- !u!114 &41434136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +197,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &41434139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41434134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb678610f50630d45bcefc296e6f2ca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabs: {fileID: 9172067547145657626, guid: 42fd5e2c964602948a67674e32adbb56, type: 3}
+  cellSize: 1.1
 --- !u!1 &161063843
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,9 +724,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41434135}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UpdateGameStatus
+      - m_Target: {fileID: 41434139}
+        m_TargetAssemblyTypeName: EnemyManager, Assembly-CSharp
+        m_MethodName: ememiesMove
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

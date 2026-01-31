@@ -5,17 +5,15 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject cardObject;
     [SerializeField] Transform cardSpawnPoint;
-
-    private List<List<bool>> status = new List<List<bool>>();
+    public List<List<bool>> status = new List<List<bool>>();
     private List<List<bool>> statusPreview = new List<List<bool>>();
     private List<List<bool>> Modifiers = new List<List<bool>>();
-
     private List<GameObject> hand = new List<GameObject>();
     private int selectedCardIndex = -1;
     private int handSize = 5;
-
     public string currentCardMode = "ADD";
-
+    // public enum CardMode { ADD, SUBTRACT };
+    // public CardMode cardMode;
     StatusManager statusManager;
     CellManager cellManager;
     Card card;
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
         cellManager = GetComponent<CellManager>();
         statusManager = GetComponent<StatusManager>();
         card = FindFirstObjectByType<Card>();
-        Transform.
+        // cardMode = CardMode.ADD;
     }
 
     void Start()
@@ -55,8 +53,9 @@ public class GameManager : MonoBehaviour
         
         // Get mode
         var mode = "OR";
-        if (currentCardMode != "ADD") {
-            mode = "AND";
+        if (currentCardMode != "ADD") 
+        {
+            mode = "XOR";
         }
 
         // Apply modifier to preview
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
             int offset = i * 5;
 
             GameObject newcard = Instantiate(cardObject, cardSpawnPoint.position + new Vector3(offset, 0, 0), Quaternion.identity);
-            newcard.GetComponent<Card>().currentShape = (Card.ShapeType)Random.Range(0, 2);
+            newcard.GetComponent<Card>().setNewCard();
 
             List<List<bool>> shapeMatrix = newcard.GetComponent<Card>().GetShapeMatrix();
 
@@ -93,7 +92,6 @@ public class GameManager : MonoBehaviour
             // Add card to hand
             hand.Add(newcard);
         }
-
     }
 
     public void GetCardShapeMask(List<List<bool>> shape)
@@ -111,6 +109,7 @@ public class GameManager : MonoBehaviour
     public void UpdateGameStatus()
     {
         // List<List<bool>> newStatus = statusManager.ApplyModifiers(status, Modifiers, "OR");
+        hand[selectedCardIndex].GetComponent<Card>().useCard();
         status = statusPreview;
         cellManager.UpdateCellColor(status);
     }
