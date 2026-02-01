@@ -163,8 +163,6 @@ public class GameManager : MonoBehaviour
 
     public void toggleMode()
     {
-        bool card = true;
-
         if (currentCardMode == "ADD")
         {
             currentCardMode = "SUB";
@@ -182,7 +180,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < hand.Count; i++)
         {
-            hand[i].GetComponent<Card>().cardMode(card);
+            hand[i].GetComponent<Card>().updateCardMode(currentCardMode);
         }
 
         ModeText.text = currentCardMode;

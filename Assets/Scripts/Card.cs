@@ -100,9 +100,9 @@ public class Card : MonoBehaviour
         else gameObject.transform.position = pos + (Vector3.up * 1f);
     }
 
-    public void cardMode(bool state)
+    public void updateCardMode(string cardMode)
     {
-        if (state)
+        if (cardMode != "ADD")
         {
             borderSprite.GetComponent<Renderer>().material.color = Color.red;
         }
