@@ -163,17 +163,26 @@ public class GameManager : MonoBehaviour
 
     public void toggleMode()
     {
+        bool card = true;
+
         if (currentCardMode == "ADD")
         {
             currentCardMode = "SUB";
-            var cardModifier = hand[selectedCardIndex].GetComponent<Card>().GetShapeMatrix();
-            updatePreview(cardModifier);
         }
         else
         {
             currentCardMode = "ADD";
+        }
+
+        if (selectedCardIndex >= 0)
+        {
             var cardModifier = hand[selectedCardIndex].GetComponent<Card>().GetShapeMatrix();
             updatePreview(cardModifier);
+        }
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            hand[i].GetComponent<Card>().cardMode(card);
         }
 
         ModeText.text = currentCardMode;

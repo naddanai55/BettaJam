@@ -9,7 +9,7 @@ public class Card : MonoBehaviour
     public ShapeType currentShape;
     private Vector3 defaultPos;
     public bool isUsed = false;
-
+    [SerializeField] GameObject borderSprite;
     public List<List<bool>> GetShapeMatrix()
     {
         switch (currentShape)
@@ -121,6 +121,18 @@ public class Card : MonoBehaviour
         {
             gameObject.transform.position = pos + (Vector3.up * 1f);
 
+        }
+    }
+
+    public void cardMode(bool state)
+    {
+        if (state)
+        {
+            borderSprite.GetComponent<Renderer>().material.color = Color.red;
+        }
+        else
+        {
+            borderSprite.GetComponent<Renderer>().material.color = Color.green;
         }
     }
 
