@@ -1,0 +1,94 @@
+{
+  "shapes": [
+    {
+      "shapeName": "ShapeCross",
+      "rows": [
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [true, true, true, true, true, true, true, true, true, true] },
+        { "cols": [true, true, true, true, true, true, true, true, true, true] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] }
+      ]
+    },
+    {
+      "shapeName": "ShapeBox1",
+      "rows": [
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, true, true, true, true, false, false, false] },
+        { "cols": [false, false, false, true, true, true, true, false, false, false] },
+        { "cols": [false, false, false, true, true, true, true, false, false, false] },
+        { "cols": [false, false, false, true, true, true, true, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] }
+      ]
+    },
+    {
+      "shapeName": "ShapeBox2",
+      "rows": [
+        { "cols": [true, true, true, true, false, false, false, false, false, false] },
+        { "cols": [true, true, true, true, false, false, false, false, false, false] },
+        { "cols": [true, true, true, true, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] }
+      ]
+    },
+    {
+      "shapeName": "ShapeBox3",
+      "rows": [
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, false, false, false, false] },
+        { "cols": [false, false, false, false, false, false, true, true, true, true] },
+        { "cols": [false, false, false, false, false, false, true, true, true, true] },
+        { "cols": [false, false, false, false, false, false, true, true, true, true] }
+      ]
+    },
+    {
+      "shapeName": "ShapeX",
+      "rows": [
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [false, true, false, false, false, false, false, false, true, false] },
+        { "cols": [false, false, true, false, false, false, false, true, false, false] },
+        { "cols": [false, false, false, true, false, false, true, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, false, true, true, false, false, false, false] },
+        { "cols": [false, false, false, true, false, false, true, false, false, false] },
+        { "cols": [false, false, true, false, false, false, false, true, false, false] },
+        { "cols": [false, true, false, false, false, false, false, false, true, false] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] }
+      ]
+    },
+    {
+      "shapeName": "ShapeBorder",
+      "rows": [
+        { "cols": [true, true, true, true, true, true, true, true, true, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, false, false, false, false, false, false, false, false, true] },
+        { "cols": [true, true, true, true, true, true, true, true, true, true] }
+      ]
+    }
+  ]
+}
