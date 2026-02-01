@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
 
         gameLevel = 1;
         lelvelText.text = gameLevel.ToString();
-
         // cardMode = CardMode.ADD;
     }
 
@@ -193,7 +192,6 @@ public class GameManager : MonoBehaviour
 
     public void commit()
     {
-        // currentEnergy -= 10;
         UpdateGameStatus();
     }
 
