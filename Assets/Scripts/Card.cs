@@ -16,10 +16,8 @@ public class Card : MonoBehaviour
 {
     // 1. KEEP YOUR ENUM EXACTLY AS IS
     public enum ShapeType { ShapeCross, ShapeBox1, ShapeBox2, ShapeBox3, ShapeX, ShapeBorder }
-
     // 2. This variable remains used by other scripts
     public ShapeType currentShape;
-
     private Vector3 defaultPos;
     public bool isUsed = false;
     [SerializeField] GameObject borderSprite;
@@ -91,9 +89,10 @@ public class Card : MonoBehaviour
         // 5. Logic remains the same, picking a random Enum
         currentShape = (ShapeType)Random.Range(0, Enum.GetNames(typeof(ShapeType)).Length);
 
-        Debug.Log((int)currentShape);
+        // Debug.Log((int)currentShape);
 
         symbolSprite[(int)currentShape].SetActive(true);
+        borderSprite.GetComponent<Renderer>().material.color = Color.red;
 
     }
 
@@ -101,9 +100,12 @@ public class Card : MonoBehaviour
 
     public void cardUp()
     {
+        if (isUsed) return;
+
         Vector3 pos = defaultPos + (Vector3.up * 1f);
         if (gameObject.transform.position == pos) gameObject.transform.position = defaultPos;
         else gameObject.transform.position = pos + (Vector3.up * 1f);
+
     }
 
     public void updateCardMode(string cardMode)

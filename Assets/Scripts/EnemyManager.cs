@@ -80,7 +80,7 @@ public class EnemyManager : MonoBehaviour
 
             if (enemyScript.enemyPos.x >= gridWidth)
             {
-                gameManager.GameOver();
+                gameManager.GameOver(2);
                 return;
             }
         }
@@ -107,6 +107,7 @@ public class EnemyManager : MonoBehaviour
         {
             enemyAmount *= 2;
             SpawnWave();
+            gameManager.PlayLevelSound();
             gameManager.gameLevel += 1;
             gameManager.resetEnergy();
         }

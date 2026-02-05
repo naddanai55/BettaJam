@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject cardObject;
     [SerializeField] Transform cardSpawnPoint;
-    [SerializeField] TMP_Text ModeText;
+    [SerializeField] GameObject addModeSprite;
+    [SerializeField] GameObject subModeSprite;
     [SerializeField] TMP_Text lelvelText;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Slider energySlider;
+    [SerializeField] AudioClip clickSound;
+    [SerializeField] AudioClip endTurnSound;
+    [SerializeField] AudioClip levelSound;
+    [SerializeField] AudioClip ModeSound;
+    [SerializeField] AudioClip selectSound;
+    [SerializeField] TMP_Text reasonText;
+
     private List<List<bool>> statusPreview = new List<List<bool>>();
     private List<List<bool>> blankStatus = new List<List<bool>>();
 
@@ -30,12 +39,14 @@ public class GameManager : MonoBehaviour
     StatusManager statusManager;
     CellManager cellManager;
     Card card;
+    AudioSource audioSource;
 
     void Awake()
     {
         cellManager = GetComponent<CellManager>();
         enemyManager = GetComponent<EnemyManager>();
         statusManager = GetComponent<StatusManager>();
+        audioSource = GetComponent<AudioSource>();
         card = FindFirstObjectByType<Card>();
 
         gameLevel = 1;
@@ -97,10 +108,13 @@ public class GameManager : MonoBehaviour
             if (selectedCardIndex >= 0 && i == selectedCardIndex)
             {
                 hand[i].GetComponent<Card>().cardUp();
+                PlaySelectSound();
             }
             else
             {
                 hand[i].GetComponent<Card>().cardDown();
+                // PlaySelectSound();
+
             }
         }
     }
@@ -123,7 +137,12 @@ public class GameManager : MonoBehaviour
 
             // Add card to hand
             hand.Add(newcard);
+
+            hand[i].GetComponent<Card>().updateCardMode(currentCardMode);
+
         }
+
+
     }
 
     // public void GetCardShapeMask(List<List<bool>> shape)
@@ -163,13 +182,19 @@ public class GameManager : MonoBehaviour
 
     public void toggleMode()
     {
+        PlayModeSound();
+
         if (currentCardMode == "ADD")
         {
             currentCardMode = "SUB";
+            addModeSprite.SetActive(false);
+            subModeSprite.SetActive(true);
         }
         else
         {
             currentCardMode = "ADD";
+            addModeSprite.SetActive(true);
+            subModeSprite.SetActive(false);
         }
 
         if (selectedCardIndex >= 0)
@@ -183,7 +208,9 @@ public class GameManager : MonoBehaviour
             hand[i].GetComponent<Card>().updateCardMode(currentCardMode);
         }
 
-        ModeText.text = currentCardMode;
+
+
+        // ModeText.text = currentCardMode;
     }
 
     public void resetHand()
@@ -207,11 +234,14 @@ public class GameManager : MonoBehaviour
 
     public void commit()
     {
+        PlayClickSound();
+
         UpdateGameStatus();
     }
 
     public void push()
     {
+        PlayendTurnSound();
         int energyUsed = calculateEnergy();
         // Debug.Log(energyUsed);
         currentEnergy -= energyUsed;
@@ -231,7 +261,7 @@ public class GameManager : MonoBehaviour
         energySlider.value = currentEnergy;
         if (currentEnergy <= 0)
         {
-            GameOver();
+            GameOver(1);
         }
     }
 
@@ -259,13 +289,63 @@ public class GameManager : MonoBehaviour
         return energyAmount;
     }
 
-    public void GameOver()
+    public void GameOver(int caseNumber)
     {
         gameOverPanel.SetActive(true);
+        if (caseNumber == 1)
+        {
+            reasonText.text = "Out of Energy !";
+        }
+        else
+        {
+            reasonText.text = "Enemy reached your base !";
+        }
     }
 
     public void RestartGame()
     {
+        PlayClickSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void PlayClickSound()
+    {
+        if (clickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
+    }
+
+    public void PlayendTurnSound()
+    {
+        if (endTurnSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(endTurnSound);
+        }
+    }
+
+    public void PlayLevelSound()
+    {
+        if (levelSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(levelSound);
+        }
+    }
+
+    public void PlayModeSound()
+    {
+        if (ModeSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ModeSound);
+        }
+    }
+
+    public void PlaySelectSound()
+    {
+        if (selectSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(selectSound);
+        }
+    }
+
 }
