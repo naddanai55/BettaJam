@@ -20,10 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip ModeSound;
     [SerializeField] AudioClip selectSound;
     [SerializeField] TMP_Text reasonText;
-
     private List<List<bool>> statusPreview = new List<List<bool>>();
     private List<List<bool>> blankStatus = new List<List<bool>>();
-
     // private List<List<bool>> Modifiers = new List<List<bool>>();
     private List<GameObject> hand = new List<GameObject>();
     private int selectedCardIndex = -1;
@@ -133,7 +131,11 @@ public class GameManager : MonoBehaviour
             // Add clicker to Object
             var clicker = newcard.AddComponent<ClickCallback>();
             var cardIndex = i;
-            clicker.OnClickAction = () => onCardSelect(cardIndex, shapeMatrix);
+            // clicker.OnClickAction = () => onCardSelect(cardIndex, shapeMatrix);
+
+            // Add dragging
+            var draggable = newcard.AddComponent<Draggable>();
+            draggable.cardIndex = cardIndex;  
 
             // Add card to hand
             hand.Add(newcard);
@@ -287,6 +289,23 @@ public class GameManager : MonoBehaviour
         }
 
         return energyAmount;
+    }
+
+    public void PreviewCard(int cardIndex)
+    {
+        // Get this card's shape
+        var cardModifier = hand[cardIndex].GetComponent<Card>().GetShapeMatrix();
+
+        // Remember which card is active
+        selectedCardIndex = cardIndex;
+
+        // Re‑use your existing preview logic
+        updatePreview(cardModifier);
+    }
+
+    public void ShowStatus()
+    {
+        cellManager.UpdateCellColor(status);
     }
 
     public void GameOver(int caseNumber)

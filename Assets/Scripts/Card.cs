@@ -14,27 +14,27 @@ public class RowWrapper { public List<bool> cols; }
 
 public class Card : MonoBehaviour
 {
-    // 1. KEEP YOUR ENUM EXACTLY AS IS
+    [SerializeField] GameObject borderSprite;
+    [SerializeField] List<GameObject> symbolSprite = new List<GameObject>();
     public enum ShapeType { ShapeCross, ShapeBox1, ShapeBox2, ShapeBox3, ShapeX, ShapeBorder }
-    // 2. This variable remains used by other scripts
     public ShapeType currentShape;
     private Vector3 defaultPos;
     public bool isUsed = false;
-    [SerializeField] GameObject borderSprite;
-    [SerializeField] List<GameObject> symbolSprite = new List<GameObject>();
-
-    // 3. Dictionary now maps Enum -> Matrix (instead of String -> Matrix)
     private static Dictionary<ShapeType, List<List<bool>>> cachedShapes;
 
     void Awake()
     {
         defaultPos = gameObject.transform.position;
 
-        // Ensure data is loaded once
         if (cachedShapes == null)
         {
             LoadShapeData();
         }
+    }
+
+    void Start()
+    {
+        List<List<bool>> myShape = GetShapeMatrix();
     }
 
     private void LoadShapeData()
@@ -81,7 +81,7 @@ public class Card : MonoBehaviour
         }
 
         Debug.LogError($"Data for {currentShape} not found in JSON!");
-        return new List<List<bool>>(); // Return empty to prevent crash
+        return new List<List<bool>>();
     }
 
     public void setNewCard()
@@ -96,7 +96,6 @@ public class Card : MonoBehaviour
 
     }
 
-    // --- The rest of your movement logic remains untouched ---
 
     public void cardUp()
     {
@@ -130,11 +129,5 @@ public class Card : MonoBehaviour
     {
         isUsed = true;
         gameObject.transform.position = defaultPos + (Vector3.up * -10f);
-    }
-
-    void Start()
-    {
-        // Test call
-        List<List<bool>> myShape = GetShapeMatrix();
     }
 }
