@@ -90,7 +90,6 @@ public class EnemyManager : MonoBehaviour
     //                 var vY = v.GetComponent<Enemy>().enemyPos.y;
     //                 if (gameManager.status[y][x] == )
     //             }
-                
 
     //         }
     //     }
