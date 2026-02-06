@@ -10,6 +10,7 @@ public class Draggable : MonoBehaviour
     private Vector3 offset;
     private Vector3 startPos;
     GameManager gameManager;
+
     void Start()
     {
         startPos = transform.position;
@@ -20,11 +21,15 @@ public class Draggable : MonoBehaviour
     {
         if (dragging)
         {
-            Vector3 mouse = Input.mousePosition;
-            mouse.z = 10f;
-
-            transform.position = Camera.main.ScreenToWorldPoint(mouse) + offset;
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
         }
+
+        // if (Input.GetMouseButtonDown(1) && Time.time > lastClickTime + clickCooldown)
+        // {
+        //     Debug.Log("Toggle");
+        //     gameManager.toggleMode();
+        //     lastClickTime = Time.time;
+        // }
     }
 
     private void OnMouseDown()

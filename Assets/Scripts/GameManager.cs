@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
             selectedCardIndex = cardIndex;
             updatePreview(cardModifier);
         }
-
     }
 
     void updatePreview(List<List<bool>> cardModifier)
@@ -101,20 +100,20 @@ public class GameManager : MonoBehaviour
         statusPreview = statusManager.ApplyModifiers(status, cardModifier, mode);
         cellManager.UpdateCellColor(statusPreview);
 
-        for (int i = 0; i < handSize; i++)
-        {
-            if (selectedCardIndex >= 0 && i == selectedCardIndex)
-            {
-                hand[i].GetComponent<Card>().cardUp();
-                PlaySelectSound();
-            }
-            else
-            {
-                hand[i].GetComponent<Card>().cardDown();
-                // PlaySelectSound();
+        // for (int i = 0; i < handSize; i++)
+        // {
+        //     if (selectedCardIndex >= 0 && i == selectedCardIndex)
+        //     {
+        //         hand[i].GetComponent<Card>().cardUp();
+        //         PlaySelectSound();
+        //     }
+        //     else
+        //     {
+        //         hand[i].GetComponent<Card>().cardDown();
+        //         // PlaySelectSound();
 
-            }
-        }
+        //     }
+        // }
     }
 
     void spawnCard()
@@ -184,7 +183,7 @@ public class GameManager : MonoBehaviour
 
     public void toggleMode()
     {
-        PlayModeSound();
+        // PlayModeSound();
 
         if (currentCardMode == "ADD")
         {
@@ -199,20 +198,16 @@ public class GameManager : MonoBehaviour
             subModeSprite.SetActive(false);
         }
 
-        if (selectedCardIndex >= 0)
-        {
-            var cardModifier = hand[selectedCardIndex].GetComponent<Card>().GetShapeMatrix();
-            updatePreview(cardModifier);
-        }
+        // if (selectedCardIndex >= 0)
+        // {
+        //     var cardModifier = hand[selectedCardIndex].GetComponent<Card>().GetShapeMatrix();
+        //     updatePreview(cardModifier);
+        // }
 
         for (int i = 0; i < hand.Count; i++)
         {
             hand[i].GetComponent<Card>().updateCardMode(currentCardMode);
         }
-
-
-
-        // ModeText.text = currentCardMode;
     }
 
     public void resetHand()
